@@ -1,0 +1,3 @@
+rm ./samplesheet/TEST_*
+rm -rf ./dataset
+rm -rf ./runs
