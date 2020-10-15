@@ -31,6 +31,7 @@ def check_header(line):
 def parse_sequence(line,sample_barcode,UMI_length):
     my_dna = Seq(line)
     
+    
     my_dna_barcode = my_dna[int(UMI_length):int(UMI_length)+len(Seq(sample_barcode))+2]
     #print my_dna_barcode
     match = my_dna_barcode.find(Seq(sample_barcode))
@@ -42,8 +43,8 @@ def parse_sequence(line,sample_barcode,UMI_length):
     else: my_dna = Seq("")
     return my_dna
     
-def chopsequence(line):
-    chopped_line = [str(line[0:8]), str(line[8:14]), str(line[14:])]
+def chopsequence(line,sample_barcode,UMI_length):
+    chopped_line = [str(line[0:int(UMI_length)]), str(line[int(UMI_length):int(UMI_length)+len(Seq(sample_barcode))]), str(line[int(UMI_length)+len(Seq(sample_barcode)):])]
     return chopped_line
 
 #alignments = pairwise2.align.localxx(my_dna_barcode, Seq(sample_barcode))
@@ -65,10 +66,10 @@ def filterBLISSfasta(input_fasta_file, sample_barcode,UMI_length):
                 line1 = line1.split(' ')[0]
                 line2 = line2.strip('\n')
                 parse_sequence_line = parse_sequence(line2,sample_barcode,UMI_length)
-                
+                #print parse_sequence_line
                 if parse_sequence_line:
                     length_seq = len(parse_sequence_line)
-                    chopped_seq_line = chopsequence(parse_sequence_line)
+                    chopped_seq_line = chopsequence(parse_sequence_line,sample_barcode,UMI_length)
                     print '{lineheader}:[1,{sequencelengths}]'.format(
                         lineheader=line1,
                         sequencelengths=length_seq

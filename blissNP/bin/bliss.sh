@@ -42,6 +42,7 @@ fi
 find $fastqDir -maxdepth 1 -type f -iname "${experiment}*.fastq.gz" | sort > filelist_"$experiment"
 
 numb_of_files=`cat filelist_"$experiment" | wc -l`
+echo "numb of files is " $rnumb_of_files
 r1=`cat filelist_"$experiment" | head -n1`
 echo "R1 is " $r1
 if [ $numb_of_files == 2 ]; then
@@ -90,7 +91,7 @@ fi
 echo "Alignment statistics:" >> $out/summary.txt
 samtools flagstat --threads $numbproc $out/*.all.bam >> $out/summary.txt
 
-rm -r "$aux"* #clean
+#rm -r "$aux"* #clean
 
 echo "Number of reads on plus strand and on minus strand:" >> $out/summary.txt
 cat $out/q"$quality"_chr-loc-strand-umi-pcr | grep -v "_" | cut -f4 | sort | uniq -c >> $out/summary.txt

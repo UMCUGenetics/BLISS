@@ -7,14 +7,14 @@ in=$4
 echo 'Parse the fastq files, filtering and trimming ...'
 if [[ $numb_of_files == 1 ]]; then # IF SE READS
     echo 'SE READS'
-    cat $out/filtered.r1.fa | cut -d':' -f-7 | tr '>' '@' | paste - - | awk '{print $1,$NF}'|
+    cat $out/filtered.r1.fa | cut -d':' -f-1 | tr '>' '@' | paste - - | awk '{print $1,$NF}'|
     LC_ALL=C sort --parallel=8 --temporary-directory=$HOME/tmp -k1,1 > $aux/ID_genomic
     LC_ALL=C join $aux/ID_genomic $in/r1oneline.fq | tr " " "\n" | grep -v "1:[YN]:0:" | paste - - - - -| 
     awk '{print $1,$2,$4,substr($5,length($5)-length($2)+1,length($5))}' | tr " " "\n" > $aux/r1.2b.aln.fq
 fi
 if [[ $numb_of_files == 2 ]]; then # PE READS
     echo 'PE READS'
-    cat $out/filtered.r1.fa | cut -d':' -f-7 | tr '>' '@' | paste - - | awk '{print $1,$NF}'|
+    cat $out/filtered.r1.fa | cut -d':' -f-1 | tr '>' '@' | paste - - | awk '{print $1,$NF}'|
     LC_ALL=C sort --parallel=8 --temporary-directory=$HOME/tmp -k1,1 > $aux/ID_genomic
     LC_ALL=C join $aux/ID_genomic $in/r1oneline.fq | tr " " "\n" | grep -v "1:[YN]:0:" | paste - - - - -| 
     awk '{print $1,$2,$4,substr($5,length($5)-length($2)+1,length($5))}' | tr " " "\n" > $aux/r1.2b.aln.fq & pid1=$!
@@ -23,4 +23,3 @@ if [[ $numb_of_files == 2 ]]; then # PE READS
     wait $pid2
 fi
 echo 'Done! Ready to be aligned to the reference genome!'
-

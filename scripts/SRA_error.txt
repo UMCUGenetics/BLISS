@@ -1,0 +1,5 @@
+bash: cannot set terminal process group (36961): Inappropriate ioctl for device
+bash: no job control in this shell
+avanhoeck@n0075 scripts [env]$   zcat /hpc/cuppen/projects/P0008_brca1/dsb_seq/raaw/SRA/SRR5241057.1_1.fastq.gz > /hpc/cuppen/projects/P0008_brca1/dsb_seq/raw/SRAA/SRR5241057.1_1.fastq
+avanhoeck@n0075 scripts [env]$   python /hpc/cuppen/projects/P0008_brca1/dsb_seq/analysis/Arne/BLISS/scripts/filter_fastq.py -i /hpc/cuppen/projects/P0008_brca1/dsb_seq/raw/SRA/SRR5241057.1_1.fastq > /hpc/cuppen/projects/P0008_brca1/dsb_seq/raw/SRA/SRR5241057.reformatted_1.fastq
+avanhoeck@n0075 scripts [env]$   gzip -c /hpc/cuppen/projects/P0008_brca1/dsb_seq/raw/SRA/SRR5241057.reformatted_1.fastq > /hpc/cuppen/projects/P0008_brca1/dsb_seq/raw/SRA/SRR5241057.reformatted_1.fastq.gz
